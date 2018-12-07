@@ -1,58 +1,52 @@
 import React, {Component} from 'react';
-import { Animated, Dimensions, Keyboard, StyleSheet, TextInput, UIManager, Image, View, Text, Button } from 'react-native';
-import { connect } from 'react-redux';
+import {Image} from 'react-native';
+//import { connect } from 'react-redux';
+import { createBottomTabNavigator } from 'react-navigation';
 
-export class Home extends Component{
-     
-    static navigationOptions = {
-        title: '',
-        header:null
-    }
+import Notificacoes from './Notificacoes';
+import Agenda from './Agenda';
+import Precificacao from './Precificacao';
+import Perfil from './Perfil';
 
-    constructor(props){
-        super(props);
-        this.state = {
-
-        };
-
-        this.Button = this.Button.bind(this);
-    }
-    
-    Button(){
-        this.props.navigation.navigate('Preload');
-    }
-    
-    render() {
-        return (
-                <View style={styles.container}>
-            
-                    <Text>Logado com sucesso</Text>
-                    <Button title="Voltar" color="purple" onPress={Button()}/>
-
-                </View>
-
-        );
-    }
-
+const GeralNavigator = createBottomTabNavigator({
+    Notificacoes:{
+        screen:Notificacoes,
+        navigationOptions: () => ({
+            tabBarIcon: () => (
+                <Image source={require('../../../assets/img/icons/home.png')} />
+            )
+        })
+    },
+    Agenda:{
+        screen:Agenda,
+        navigationOptions: () => ({
+            tabBarIcon: () => (
+                <Image source={require('../../../assets/img/icons/chat.png')} />
+            )
+        })
+    },
+    Precificacao:{
+        screen:Precificacao,
+        navigationOptions: () => ({
+            tabBarIcon: () => (
+                <Image source={require('../../../assets/img/icons/favorito.png')} />
+            )
+        })
+    },
+    Perfil:{
+        screen:Perfil,
+        navigationOptions: () => ({
+            tabBarIcon: () => (
+                <Image source={require('../../../assets/img/icons/conta.png')} />
+            )
+        })
+    },
+},{
+    tabBarPosition:'bottom',
+    animationEnabled:false,
+    swipeEnabled:false,
 }
+    
+);
 
-const styles = StyleSheet.create({
-      container:{
-        flex: 1,
-        width: null,
-        alignItems:'center',
-        justifyContent: 'flex-start',
-        backgroundColor: 'red',
-        paddingTop: 30,
-        backgroundColor: 'lightblue'
-      }, 
-});
-
-const mapStateToProps = (state) => {
-    return{
-        
-    };
-};
-
-const HomeConnect = connect(mapStateToProps, {})(Home);
-export default HomeConnect;
+export default GeralNavigator;

@@ -22,7 +22,7 @@ export class Preload extends Component{
 
     directPages(){
        
-        if(this.props.status == 1){
+        if(this.props.status == 0 || this.props.status == 2){
             this.props.navigation.dispatch(StackActions.reset({
                 index:0,
                 actions:[
@@ -32,12 +32,12 @@ export class Preload extends Component{
     
         }
 
-        if(this.props.status == 2){
+        if(this.props.status == 1){
             
             this.props.navigation.dispatch(StackActions.reset({
                 index:0,
                 actions:[
-                    NavigationActions.navigate({routeName:'Login'})
+                    NavigationActions.navigate({routeName:'Home'})
                 ]
             }));
         }

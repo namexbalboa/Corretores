@@ -14,10 +14,7 @@ export class Login extends Component{
     constructor(props){
         super(props);
         this.state = {
-
         };
-
-        this.Button = this.Button.bind(this);
     }
 
     //Quando faz a ação
@@ -27,11 +24,7 @@ export class Login extends Component{
         this.props.navigation.navigate('Home');
     }
 }
-    
-    Button(){
-        this.props.navigation.navigate('Preload');
-    }
-    
+
     render() {
         return (
             <KeyboardShift>
@@ -106,12 +99,10 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state) => {
     return{
-
         status:state.auth.status,
-        uid:state.auth.uid,
         email:state.auth.email,
-        password:state.auth.password
-
+        password:state.auth.password,
+        uid:state.auth.uid,
     };
 };
 
