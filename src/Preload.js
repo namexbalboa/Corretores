@@ -1,9 +1,7 @@
 import React, {Component} from 'react';
 import {StyleSheet, View, Text, Image} from 'react-native';
 import { connect } from 'react-redux';
-
-//import { checkLogin } from '../actions/AuthActions';
-
+import { checkLogin } from '../src/actions/AuthActions';
 import { NavigationActions, StackActions } from 'react-navigation';
 
 export class Preload extends Component{
@@ -17,33 +15,34 @@ export class Preload extends Component{
         super(props);
         this.state = {};
 
-//        this.props.checkLogin();
+        this.props.checkLogin();
         this.directPages = this.directPages.bind(this);
     }
 
 
     directPages(){
-
+       
+        if(this.props.status == 1){
             this.props.navigation.dispatch(StackActions.reset({
                 index:0,
                 actions:[
-                    NavigationActions.navigate({routeName:'Home'})
+                    NavigationActions.navigate({routeName:'Login'})
                 ]
             }));  
     
-    }
-/*
+        }
+
         if(this.props.status == 2){
             
             this.props.navigation.dispatch(StackActions.reset({
                 index:0,
                 actions:[
-                    NavigationActions.navigate({routeName:'Geral'})
+                    NavigationActions.navigate({routeName:'Login'})
                 ]
             }));
         }
     }
-    */
+   
    
     componentDidMount(){
         this.directPages();
@@ -82,10 +81,10 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state) => {
     return{
-       
+        status:state.auth.status
     };
 
 };
 
-const PreloadConnect = connect(mapStateToProps, {})(Preload);
+const PreloadConnect = connect(mapStateToProps, { checkLogin })(Preload);
 export default PreloadConnect;
