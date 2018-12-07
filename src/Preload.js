@@ -18,24 +18,23 @@ export class Preload extends Component{
         this.state = {};
 
 //        this.props.checkLogin();
-//        this.directPages = this.directPages.bind(this);
+        this.directPages = this.directPages.bind(this);
     }
 
-    /*
-    directPages(){
 
-        if(this.props.status == 1){
+    directPages(){
 
             this.props.navigation.dispatch(StackActions.reset({
                 index:0,
                 actions:[
-                    NavigationActions.navigate({routeName:'Geral'})
+                    NavigationActions.navigate({routeName:'Home'})
                 ]
             }));  
-        }  
-
+    
+    }
+/*
         if(this.props.status == 2){
-            //TODO MUDAR PARA Inicio
+            
             this.props.navigation.dispatch(StackActions.reset({
                 index:0,
                 actions:[
@@ -44,6 +43,7 @@ export class Preload extends Component{
             }));
         }
     }
+    */
    
     componentDidMount(){
         this.directPages();
@@ -52,7 +52,7 @@ export class Preload extends Component{
     componentDidUpdate(){
         this.directPages();
     }
-     */
+    
 
     render() {
         return (
