@@ -1,0 +1,3 @@
+rootProject.name = 'Corretores2'
+
+include ':app'
