@@ -7,7 +7,7 @@ export default class NotificacoesItem extends Component{
     constructor(props){
         super(props);
         this.state = { 
-            isModalVisible: false,
+            //isModalVisible: false,
         }
     }
 

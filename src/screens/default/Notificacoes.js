@@ -15,11 +15,13 @@ export class Notificacoes extends Component {
   constructor(props){
     super(props);
     this.state = { 
-        loading: true, 
+        loading: false,
+        a: '' 
     };
   
     this.props.NotificacoesList();
     this.houseClick = this.houseClick.bind(this);
+    this.funcao = this.funcao.bind(this);
     }
 
   componentWillReceiveProps() {
@@ -33,6 +35,18 @@ export class Notificacoes extends Component {
         
     }
 
+    funcao(){
+
+        if(this.props.lista != null) {
+
+            this.setState ({a: 'CARALHO'});
+
+        }else{
+
+            this.setState ({a: 'BOSTA'});
+
+        }
+    }
   render() {
 
     return (
@@ -43,12 +57,16 @@ export class Notificacoes extends Component {
                 <ActivityIndicator size="large" />
             </View>
             :
+            <View >
+            <Text>Lista {this.state.a}</Text>
+            <Text>UID {this.props.uid}</Text>
+            <Text>Status {this.props.status}</Text>
             <FlatList 
                 data={this.props.lista}
                 windowSize={20}
                 renderItem={ ({item}) => <NotificacoesItem data={item} onPress={(this.houseClick)}/> } 
             />
-
+            </View>
         } 
         </View>
     );
