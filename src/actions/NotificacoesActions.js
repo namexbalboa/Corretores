@@ -10,7 +10,7 @@ export const NotificacoesList = () => {
             snapshot.forEach((childSnapshot)=>{
                 notificacoes.push({
                     key:childSnapshot.key,
-                    items:childSnapshot.child('uidCorretor').child('workflow').child('uidAnuncio').child('notificacoes').val().uidAnuncio,
+                    creci:childSnapshot.val().creci,
                 });
             });
 

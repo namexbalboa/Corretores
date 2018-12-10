@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {StyleSheet, FlatList, View, Text, ActivityIndicator} from 'react-native';
+import {StyleSheet, FlatList, View, Text, ActivityIndicator, Button} from 'react-native';
 import { connect } from 'react-redux';
 import NotificacoesItem from '../../Components/notificacoes/NotificacoesItem';
 import { NotificacoesList } from '../../actions/NotificacoesActions';
@@ -16,7 +16,7 @@ export class Notificacoes extends Component {
     super(props);
     this.state = { 
         loading: false,
-        a: '' 
+        a: 'CARACA',
     };
   
     this.props.NotificacoesList();
@@ -37,12 +37,14 @@ export class Notificacoes extends Component {
 
     funcao(){
 
-        if(this.props.lista != null) {
+        console.log(this.props.lista);
+
+        if(this.props.lista == 0) {
 
             this.setState ({a: 'CARALHO'});
 
         }else{
-
+            
             this.setState ({a: 'BOSTA'});
 
         }
@@ -58,8 +60,7 @@ export class Notificacoes extends Component {
             </View>
             :
             <View >
-            <Text>Lista {this.state.a}</Text>
-            <Text>UID {this.props.uid}</Text>
+            <Text>CRECI {this.props.uid}</Text>
             <Text>Status {this.props.status}</Text>
             <FlatList 
                 data={this.props.lista}
