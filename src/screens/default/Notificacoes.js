@@ -95,11 +95,13 @@ export class Notificacoes extends Component {
 
             </View>
             
+            <View style={styles.adjust}>
                 <FlatList 
                     data={this.props.lista}
                     windowSize={20}
                     renderItem={ ({item}) => <NotificacoesItem data={item} onPress={(this.houseClick)}/> } 
                 />
+            </View>
         </View>
         } 
         </View>
@@ -149,6 +151,9 @@ const styles = StyleSheet.create({
     statusBarRight:{
         flexDirection: 'row',
         padding: 10,
+    },
+    adjust:{
+        marginBottom: 200,
     },
 
 })

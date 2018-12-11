@@ -16,11 +16,17 @@ export default class NotificacoesItem extends Component{
     this.setState({ isModalVisible: !this.state.isModalVisible });
 
     renderModalContent = () => (
-        <ScrollView>
         <View style={stylesItem.modalContent}>  
+            <TouchableHighlight underlayColor="#DDDDDD" onPress={this._toggleModal}>
+                <View style={stylesItem.modalFechar}>
+                    <Text style={stylesItem.txtbtnFechar}>X</Text>
+                </View>
+            </TouchableHighlight>
+
                 <Text>Hello</Text>
+
         </View>
-        </ScrollView>
+
     );
 
     houseModalClick(){
@@ -39,6 +45,7 @@ export default class NotificacoesItem extends Component{
                         backdropTransitionOutTiming={500}
                         >
                             <View style={{ flex: 1 }}>
+
                                 {this.renderModalContent()}
                                 
                             </View>
@@ -79,7 +86,7 @@ const stylesItem = StyleSheet.create ({
         shadowOpacity: 0.8,
         shadowRadius: 2,
         elevation: 1,
-        height: 150,
+        height: 60,
     },
     linha:{
         padding: 3,
@@ -91,7 +98,6 @@ const stylesItem = StyleSheet.create ({
         fontSize: 17,
     },
 
-    /*
     modalContent: {
         flex:1,
         backgroundColor: "white",
@@ -101,17 +107,6 @@ const stylesItem = StyleSheet.create ({
         borderRadius: 4,
         borderColor: "rgba(0, 0, 0, 0.1)"
       },
-      modalHeader:{
-          flexDirection: 'row',
-          alignItems:'center',
-          justifyContent: 'space-between',
-          width: '100%',  
-      },
-      modalBtns:{
-          flexDirection: 'row',
-          justifyContent: 'space-around',
-          marginTop: 15,
-      },
       modalFechar:{
         backgroundColor: 'black', 
         alignItems: 'center',
@@ -119,43 +114,12 @@ const stylesItem = StyleSheet.create ({
         paddingRight: 20,
         borderRadius: 15,
       },
-      modalCard:{
-        marginTop:15,
-        flexDirection: 'row',
-        justifyContent: 'flex-start',
-        alignItems: 'center',
-        padding:15,
-        backgroundColor: 'rgba(0,0,0,0.1)',
-        borderRadius: 15,
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.8,
-        shadowRadius: 2,
-      },
-      modalTop:{
-        justifyContent: 'flex-start',
-        paddingTop: 15,
-        width:'100%',
-        height: '90%',
-      },
-      modalBottom:{
-        justifyContent: 'flex-end',
-        width:'100%',
-        height: '10%',
-      },
-      btnFechar:{
-          backgroundColor: 'black',
-          width:'100%',
-          height: 40,
-          alignItems: 'center',
-          justifyContent: 'center',
-          alignSelf:'center'
-      },
       txtbtnFechar:{
           color:'white',
           fontSize: 19,
           fontWeight: 'bold'
       },
+      /*
       barContainer: {
         alignSelf: 'center',
         position: 'absolute',
