@@ -3,6 +3,7 @@ import {StyleSheet, FlatList, View, Text, ActivityIndicator, Switch} from 'react
 import { connect } from 'react-redux';
 import NotificacoesItem from '../../Components/notificacoes/NotificacoesItem';
 import { NotificacoesList } from '../../actions/NotificacoesActions';
+import firebase from '../../FBCONN';
 
 export class Notificacoes extends Component {
 
@@ -16,45 +17,93 @@ export class Notificacoes extends Component {
     super(props);
     this.state = { 
         loading: false,
-        a: 'CARACA',
-        switch1Value: false,
+        switchValue: false,
+        bgColor:'#FF5858',
+        txtAtivar: 'Ativar',
+        txtOnline: 'OFFLINE',
+        nome: '',
+        status: 0,
+        creci: ''
     };
   
+    this.alternar = this.alternar.bind(this);
     this.props.NotificacoesList();
     this.houseClick = this.houseClick.bind(this);
-    this.funcao = this.funcao.bind(this);
     }
 
   componentWillReceiveProps() {
     setTimeout(() =>{
         this.setState({ loading: false })
     },
-        2000)
+        500)
+    }
+
+    //Provisorio
+    componentDidMount(){
+        firebase.database().ref('corretores').on('value', (snapshot)=>{
+
+        let exemplo = [];
+
+        snapshot.forEach((childSnapshot)=>{
+            exemplo.push({
+                key:childSnapshot.key,
+                name:childSnapshot.val().nome,
+                creci:childSnapshot.val().creci,
+                status:childSnapshot.val().statusNow,
+            });
+        });
+        
+        let found = exemplo.find(function(element) {
+            return element.key == 'uidCorretor';
+          });
+        
+        if (found.name != null){
+            this.setState({ 
+                nome: found.name, 
+                status: found.status,
+                creci: found.creci,
+            })  
+        }else{
+            this.setState({ 
+
+            })
+        }      
+
+        });
     }
 
     houseClick(){
         
     }
+    
+    alternar() {
+        let s = this.state;
 
-    toggleSwitch1 = (value) => {
-        this.setState({switch1Value: value})
-        console.log('Switch 1 is: ' + value)
-     }
+		if(this.state.status == 0) {
+            s.bgColor = 'lightgreen';
+            s.switchValue = true;
+            s.txtAtivar = 'Desativar';
+            s.txtOnline = 'ONLINE';
+            s.status = 1;
+            firebase.database().ref('corretores/' + 'uidCorretor')
+                .update({statusNow: 1});
 
-    funcao(){
+		}else if(this.state.status == 1) {
+            s.bgColor = '#FF5858';
+            s.switchValue = false; 
+            s.txtAtivar = 'Ativar';
+            s.txtOnline = 'OFFLINE';
+            s.status = 0;
+            firebase.database().ref('corretores/' + 'uidCorretor')
+                .update({statusNow: 0});
+          
+		}
 
-        console.log(this.props.lista);
+        this.setState(s);
+   
+	}
+    
 
-        if(this.props.lista == 0) {
-
-            this.setState ({a: 'CARALHO'});
-
-        }else{
-            
-            this.setState ({a: 'BOSTA'});
-
-        }
-    }
   render() {
 
     return (
@@ -70,8 +119,8 @@ export class Notificacoes extends Component {
                 <View style={styles.topBar}>
                 
                     <View style={styles.topBarLeft}>
-                        <Text style={styles.whiteText}>Nome e Sobrenome</Text>
-                        <Text style={styles.whiteText}>Creci: 000000-RO</Text>
+                        <Text style={styles.whiteText}>{this.state.nome}</Text>
+                        <Text style={styles.whiteText}>Creci: {this.state.creci}</Text>
                     </View>
 
                     <View style={styles.topBarRight}>
@@ -80,17 +129,18 @@ export class Notificacoes extends Component {
 
                 </View>
 
-            <View style={styles.statusBar}>
+            
+            <View style={[styles.statusBar, {backgroundColor:this.state.bgColor}]}>
                 
                 <View style={styles.statusBarLeft}>
-                    <Text> OFFLINE</Text>
+                    <Text>{this.state.txtOnline}</Text>
                 </View>
-
+                
                 <View style={styles.statusBarRight}>
-                    <Text>Ativar {this.props.status}</Text>
-                    <Switch
-                        onValueChange = {this.toggleSwitch1}
-                        value = {this.switch1Value}/>
+                    <Text>{this.state.txtAtivar}</Text>
+
+                    <Switch value={this.state.switchValue} onValueChange={this.alternar} />
+
                 </View>
 
             </View>
@@ -141,7 +191,6 @@ const styles = StyleSheet.create({
         fontSize: 17,
     },
     statusBar:{
-        backgroundColor:'#FF5858',
         flexDirection:'row',
         justifyContent: 'space-between',
     },
