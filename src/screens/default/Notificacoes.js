@@ -19,14 +19,15 @@ export class Notificacoes extends Component {
         loading: false,
         switchValue: false,
         bgColor:'#FF5858',
-        txtAtivar: 'Ativar',
-        txtOnline: 'OFFLINE',
+        txtAtivar: '.',
+        txtOnline: 'DESCONECTADO',
         nome: '',
-        status: 0,
+        status: 2,
         creci: ''
     };
   
     this.alternar = this.alternar.bind(this);
+    this.alternar();
     this.props.NotificacoesList();
     this.houseClick = this.houseClick.bind(this);
     }
@@ -79,7 +80,7 @@ export class Notificacoes extends Component {
     alternar() {
         let s = this.state;
 
-		if(this.state.status == 0) {
+		if(this.state.status == 2) {
             s.bgColor = 'lightgreen';
             s.switchValue = true;
             s.txtAtivar = 'Desativar';
@@ -93,15 +94,16 @@ export class Notificacoes extends Component {
             s.switchValue = false; 
             s.txtAtivar = 'Ativar';
             s.txtOnline = 'OFFLINE';
-            s.status = 0;
+            s.status = 2;
             firebase.database().ref('corretores/' + 'uidCorretor')
-                .update({statusNow: 0});
+                .update({statusNow: 2});
           
 		}
 
         this.setState(s);
    
-	}
+    }
+    
     
 
   render() {
