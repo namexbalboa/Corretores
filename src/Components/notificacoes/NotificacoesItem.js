@@ -8,6 +8,7 @@ export default class NotificacoesItem extends Component{
         super(props);
         this.state = { 
             isModalVisible: false,
+            nome:{}
         }
     }
 
@@ -29,10 +30,16 @@ export default class NotificacoesItem extends Component{
 
     );
 
+    componentDidMount(){
+
+
+    }
+
     houseModalClick(){
     }
 
     render() {
+ 
         return (
                 <View style={stylesItem.container}>
 
@@ -53,21 +60,18 @@ export default class NotificacoesItem extends Component{
 
                         <TouchableHighlight underlayColor="#DDDDDD" onPress={this._toggleModal}>
                         <View>
-
                             <View style={stylesItem.linha}>
-                            
-                                <Text style={stylesItem.txtBtn}>{this.props.data.creci}</Text>
-                                <Image source={require('../../../assets/img/icons/favorito.png')} style={stylesItem.icon}/>
-
+                                <Text style={stylesItem.h1}>Visita</Text>
+                            </View>
+                            <View style={stylesItem.linha}>
+                                <Text style={stylesItem.txtBtn}>Visita Tipo: {this.props.data.val.tipo}</Text>
+                            </View>
+                            <View style={stylesItem.linha}>      
+                                <Text style={stylesItem.txtBtn}>Dia: {this.props.data.val.date} ({this.props.data.val.dia} às {this.props.data.val.hora})</Text>
                             </View>
 
-                            <View style={stylesItem.linha}>
                             
-                                <Text style={stylesItem.txtBtn}>{this.props.data.creci}</Text>
-                                <Image source={require('../../../assets/img/icons/favorito.png')} style={stylesItem.icon}/>
-
-                            </View>
-
+                    
                         </View>
                         </TouchableHighlight>
 
@@ -86,18 +90,21 @@ const stylesItem = StyleSheet.create ({
         shadowOpacity: 0.8,
         shadowRadius: 2,
         elevation: 1,
-        height: 60,
+
     },
     linha:{
         padding: 3,
         justifyContent:'space-between',
         flexDirection: 'row'
     },
-    txtBtn:{
-        fontWeight: 'bold',
-        fontSize: 17,
+    h1:{
+        fontSize:18,
+        fontWeight: 'bold'
     },
-
+    txtBtn:{
+        fontSize: 14,
+        color: 'gray'
+    },
     modalContent: {
         flex:1,
         backgroundColor: "white",

@@ -1,10 +1,11 @@
 import React, {Component} from 'react';
-import {StyleSheet, FlatList, View, Text, ActivityIndicator, Switch} from 'react-native';
+import {StyleSheet, FlatList, View, Text, ActivityIndicator, Switch, Button} from 'react-native';
 import { connect } from 'react-redux';
 import NotificacoesItem from '../../Components/notificacoes/NotificacoesItem';
 import { NotificacoesList } from '../../actions/NotificacoesActions';
 import firebase from '../../FBCONN';
 
+DB = firebase.database(); 
 export class Notificacoes extends Component {
 
   static navigationOptions = {
@@ -23,25 +24,38 @@ export class Notificacoes extends Component {
         txtOnline: 'DESCONECTADO',
         nome: '',
         status: 2,
-        creci: ''
+        creci: '',
+        data: []
     };
   
     this.alternar = this.alternar.bind(this);
     this.alternar();
     this.props.NotificacoesList();
     this.houseClick = this.houseClick.bind(this);
+
     }
 
-  componentWillReceiveProps() {
-    setTimeout(() =>{
-        this.setState({ loading: false })
-    },
-        500)
-    }
-
-    //Provisorio
     componentDidMount(){
-        firebase.database().ref('corretores').on('value', (snapshot)=>{
+        
+        DB.ref('visitas')
+        .on("value", snapshot => {
+            const data = [];
+            
+            snapshot.forEach((childSnap)=>{
+                data.push({
+                    key: childSnap.key,
+                    val: childSnap.val()
+                });
+            });
+            
+            this.setState({ data });
+         
+        }); 
+        
+        
+
+        //Busca corretor logado
+        DB.ref('corretores').on('value', (snapshot)=>{
 
         let exemplo = [];
 
@@ -64,13 +78,23 @@ export class Notificacoes extends Component {
                 status: found.status,
                 creci: found.creci,
             })  
-        }else{
-            this.setState({ 
-
-            })
-        }      
+        } 
 
         });
+        
+    }
+
+    componentWillUnmount(){
+        //DB.ref('corretores').off(); 
+        //DB.ref('anuncios').off(); 
+    }
+
+    componentWillReceiveProps() {
+        setTimeout(() =>{
+            this.setState({ loading: false })
+        },
+            500)
+        
     }
 
     houseClick(){
@@ -107,7 +131,7 @@ export class Notificacoes extends Component {
     
 
   render() {
-
+      console.log(this.state.data);
     return (
         <View style={styles.container}>
         {
@@ -145,11 +169,12 @@ export class Notificacoes extends Component {
 
                 </View>
 
+                
             </View>
             
             <View style={styles.adjust}>
                 <FlatList 
-                    data={this.props.lista}
+                    data={this.state.data}
                     windowSize={20}
                     renderItem={ ({item}) => <NotificacoesItem data={item} onPress={(this.houseClick)}/> } 
                 />

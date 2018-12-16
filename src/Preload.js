@@ -26,7 +26,7 @@ export class Preload extends Component{
             this.props.navigation.dispatch(StackActions.reset({
                 index:0,
                 actions:[
-                    NavigationActions.navigate({routeName:'Login'})
+                    NavigationActions.navigate({routeName:'Home'})
                 ]
             }));  
     
